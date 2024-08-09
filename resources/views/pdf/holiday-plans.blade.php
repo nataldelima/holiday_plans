@@ -16,13 +16,18 @@
 
 <body>
     <h1>Plano de Férias</h1>
-    <p><strong>Título:</strong> {{ $plan->title }}</p>
-    <p><strong>Descrição:</strong> {{ $plan->description }}</p>
-    <p><strong>Data:</strong> {{ $plan->date }}</p>
-    <p><strong>Local:</strong> {{ $plan->location }}</p>
-    @if ($plan->participants)
+    @foreach ($plans as $plan)
+    <div class="plan">
+        <p><strong>Título:</strong> {{ $plan->title }}</p>
+        <p><strong>Descrição:</strong> {{ $plan->description }}</p>
+        <p><strong>Data:</strong> {{ $plan->date }}</p>
+        <p><strong>Local:</strong> {{ $plan->location }}</p>
+        @if ($plan->participants)
         <p><strong>Participantes:</strong> {{ $plan->participants }}</p>
-    @endif
+        <hr>
+        @endif
+    </div>
+    @endforeach
 </body>
 
 </html>

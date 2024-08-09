@@ -12,6 +12,7 @@ class HolidayPlansController extends Controller
     {
         return HolidayPlans::all();
     }
+
     public function show($id)
     {
         return HolidayPlans::findOrFail($id);
@@ -26,6 +27,7 @@ class HolidayPlansController extends Controller
         ]);
         return response()->json(HolidayPlans::create($request->all()), 201);
     }
+
     public function update(Request $request, $id)
     {
         $holidayPlan = HolidayPlans::findOrFail($id);
@@ -38,10 +40,18 @@ class HolidayPlansController extends Controller
         $holidayPlan->delete();
         return response()->json(null, 204);
     }
+
     public function generatePdf($id)
     {
         $plan = HolidayPlans::findOrFail($id);
         $pdf = PDF::loadView('pdf.holiday-plan', compact('plan'));
         return $pdf->download('holiday-plan.pdf');
+    }
+
+    public function generateAllPdf()
+    {
+        $plans = HolidayPlans::all();
+        $pdf = PDF::loadView('pdf.holiday-plans', compact('plans'));
+        return $pdf->download('holiday-plans.pdf');
     }
 }
