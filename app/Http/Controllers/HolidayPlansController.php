@@ -38,8 +38,9 @@ class HolidayPlansController extends Controller
         $holidayPlan->delete();
         return response()->json(null, 204);
     }
-    public function generatePDF(HolidayPlans $plan)
+    public function generatePdf($id)
     {
+        $plan = HolidayPlans::findOrFail($id);
         $pdf = PDF::loadView('pdf.holiday-plan', compact('plan'));
         return $pdf->download('holiday-plan.pdf');
     }

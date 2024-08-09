@@ -21,7 +21,7 @@
     <p><strong>Data:</strong> {{ $plan->date}}</p>
     <p><strong>Local:</strong> {{ $plan->location }}</p>
     @if($plan->participants)
-    <p><strong>Participantes:</strong> {{ implode(', ', $plan->participants)}}</p>
+    <p><strong>Participantes:</strong> {{$plan->participants}}</p>
     @endif
 </body>
 
