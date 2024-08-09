@@ -1,66 +1,257 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API de Planos de Férias
+Esta é uma API RESTful desenvolvida em Laravel 11 para gerenciar planos de férias para o ano de 2024. A API permite criar, ler, atualizar e excluir planos de férias, bem como gerar documentos PDF com detalhes dos planos.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Funcionalidades
+- **CRUD de Planos de Férias:** Crie, leia, atualize e exclua planos de férias.
+- **Geração de PDFs:** Gere um documento PDF contendo os detalhes de um plano de férias.
+- **Autenticação:** Utilize JWT para autenticação e proteção dos endpoints da API.
+## Documentação da API
+A documentação completa da API está disponível em [Postman](https://documenter.getpostman.com/view/23405156/2sA3s3GBAF). Esta documentação inclui detalhes sobre todos os endpoints disponíveis, parâmetros necessários e exemplos de requisições e respostas.
 
-## About Laravel
+## Endpoints da API
+### 1. Login
+- **Método:** POST
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Endpoint:** `/api/login`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Parâmetros:**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    - `email` (string, obrigatório): O e-mail do usuário.
+    - `password` (string, obrigatório): A senha do usuário.
+- **Resposta de Sucesso:**
 
-## Learning Laravel
+    - **Código:** 200 OK
+    - **Corpo:**
+    ```json
+    {
+      "token": "JWT_TOKEN"
+    }
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Register
+- **Método:** POST
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Endpoint:** `/api/register`
 
-## Laravel Sponsors
+- **Parâmetros:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    - `name` (string, obrigatório): Nome do usuário.
+    - `email` (string, obrigatório): E-mail do usuário.
+    - `password` (string, obrigatório): Senha do usuário.
+- **Resposta de Sucesso:**
 
-### Premium Partners
+    - **Código:** 201 Created
+    - **Corpo:**
+     ```json
+     {
+  "message": "User registered successfully"
+  } 
+  ```
+  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+### 3. Criar um Novo Plano de Férias
+- **Método:** POST
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Endpoint:** `/api/holiday-plans`
 
-## Code of Conduct
+- **Parâmetros:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    - `title` (string, obrigatório): O título do plano de férias.
+    - `description` (string, obrigatório): Descrição do plano de férias.
+     - `date` (string, obrigatório): Data do plano de férias.
+     - `location` (string, obrigatório): Local do plano de férias.
+     - `participants` (string, opcional): Participantes do plano de férias.
+- Resposta de Sucesso:
 
-## Security Vulnerabilities
+    - Código: 201 Created
+    - Corpo:
+    ```json
+    {
+  "title": "Título do Plano",
+  "description": "Descrição do Plano",
+  "date": "2024-08-01",
+  "location": "Local",
+  "participants": "Participantes",
+  "updated_at": "2024-08-01T12:00:00Z",
+  "created_at": "2024-08-01T12:00:00Z",
+  "id": 1
+  }
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4. Recuperar Todos os Planos de Férias
+- **Método:** GET
+
+- **Endpoint:** `/api/holiday-plans`
+
+- **Resposta de Sucesso:**
+
+    - **Código:** 200 OK
+    - **Corpo:**
+    ```json
+    [
+        {
+            "title": "Título do Plano",
+            "description": "Descrição do Plano",
+            "date": "2024-08-01",
+            "location": "Local",
+            "participants": "Participantes",
+            "updated_at": "2024-08-01T12:00:00Z",
+            "created_at": "2024-08-01T12:00:00Z",
+            "id": 1
+        }
+    ]
+    ```
+
+
+
+### 5. Recuperar um Plano de Férias Específico
+- **Método:** GET
+
+- **Endpoint:** `/api/holiday-plans/{id}`
+
+- **Parâmetros:**
+
+    - `id` (integer, obrigatório): ID do plano de férias.
+- **Resposta de Sucesso:**
+
+    - **Código:** 200 OK
+    - **Corpo:**
+    ```json
+    {
+  "title": "Título do Plano",
+  "description": "Descrição do Plano",
+  "date": "2024-08-01",
+  "location": "Local",
+  "participants": "Participantes",
+  "updated_at": "2024-08-01T12:00:00Z",
+  "created_at": "2024-08-01T12:00:00Z",
+  "id": 1
+  }
+  ```
+
+
+### 6. Atualizar um Plano de Férias
+- **Método:** PUT
+
+- **Endpoint:** `/api/holiday-plans/{id}`
+
+- **Parâmetros:**
+
+    - `id` (integer, obrigatório): ID do plano de férias a ser atualizado.
+    - `title` (string, obrigatório): O título do plano de férias.
+    - `description` (string, obrigatório): Descrição do plano de férias.
+    - `date` (string, obrigatório): Data do plano de férias.
+    - `location` (string, obrigatório): Local do plano de férias.
+    - `participants` (string, opcional): Participantes do plano de férias.
+- **Resposta de Sucesso:**
+
+    - **Código: 200 OK
+    - **Corpo:**
+```json
+{
+  "title": "Título Atualizado",
+  "description": "Descrição Atualizada",
+  "date": "2024-08-01",
+  "location": "Local Atualizado",
+  "participants": "Participantes Atualizados",
+  "updated_at": "2024-08-01T12:00:00Z",
+  "created_at": "2024-08-01T12:00:00Z",
+  "id": 1
+  }
+  ```
+
+
+
+### 7. Excluir um Plano de Férias
+- **Método:** DELETE
+
+- **Endpoint:** `/api/holiday-plans/{id}`
+
+- **Parâmetros:**
+
+    - `id` (integer, obrigatório): ID do plano de férias a ser excluído.
+- **Resposta de Sucesso:**
+
+    - **Código:** 204 No Content
+
+### 8. Gerar PDF para um Plano de Férias
+- **Método:** GET
+
+- **Endpoint:** `/api/holiday-plans/{id}/pdf`
+
+- **Parâmetros:**
+
+    - `id` (integer, obrigatório): ID do plano de férias para gerar o PDF.
+- **Resposta de Sucesso:**
+
+    - **Código:** 200 OK
+    - **Tipo de Conteúdo:** `application/pdf`
+    - **Descrição:** Arquivo PDF contendo o plano de férias.
+
+### 9. Gerar PDF para todos os Planos de Férias
+- **Método:** GET
+
+- **Endpoint:** `/api/holiday-plans-all`
+
+- **Resposta de Sucesso:**
+
+    - **Código:** 200 OK
+    - **Tipo de Conteúdo:** `application/pdf`
+    - **Descrição:** Arquivo PDF contendo o plano de férias.
+
+## Instalação
+Clone o Repositório:
+
+```bash
+git clone https://github.com/nataldelima/holiday_plans.git
+cd holiday_plans
+```
+
+
+## Instale as Dependências:
+
+```bash
+composer install
+```
+
+
+## Configure o Ambiente:
+Copie o arquivo `.env.example` para .env e ajuste as configurações conforme necessário.
+
+```bash
+cp .env.example .env
+```
+
+## Gere a Chave de Aplicativo:
+
+```bash
+php artisan key:generate
+```
+
+## Execute as Migrations:
+
+```bash
+php artisan migrate
+```
+
+## Execute os Testes:
+
+```bash
+php artisan test
+```
+
+## Inicie o Servidor:
+
+```bash
+php artisan serve
+```
+## Informações adicionais
+API produzida por [Natal Lima](https://nataldelima.github.io)
+
+
+
+# Obrigado por usar nossa API!
